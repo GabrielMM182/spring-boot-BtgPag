@@ -15,6 +15,9 @@ public class RabbitMqConfig {
     public static final String DEAD_LETTER_QUEUE = "btg-pactual-order-created-dlq";
     public static final String DEAD_LETTER_EXCHANGE = "btg-pactual-dlx";
 
+    public static final String TEST_QUEUE = "btg-pactual-order-test";
+
+
 
     @Bean
     public Jackson2JsonMessageConverter jackson2JsonMessageConverter() {
@@ -29,10 +32,10 @@ public class RabbitMqConfig {
                 .build();
     }
 
-//    @Bean
-//    public Declarable orderCreatedQueue(){
-//        return new Queue(ORDER_CREATED_QUEUE);
-//    }
+    @Bean
+    public Declarable testQueue() {
+        return new Queue(TEST_QUEUE);
+    }
 
     @Bean
     public Declarable deadLetterQueue() {
