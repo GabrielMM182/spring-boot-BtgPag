@@ -3,7 +3,10 @@ package com.projetoBtgPag.projetoBtg.service;
 import com.projetoBtgPag.projetoBtg.entity.OrderEntity;
 import com.projetoBtgPag.projetoBtg.entity.OrderItem;
 import com.projetoBtgPag.projetoBtg.listener.dto.OrderCreatedEventDto;
+import com.projetoBtgPag.projetoBtg.listener.dto.OrderResponse;
 import com.projetoBtgPag.projetoBtg.repository.OrderRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -28,6 +31,11 @@ public class OrderService {
         entity.setTotal(getTotalItems(eventDto));
 
         orderRepository.save(entity);
+    }
+
+    public Page<OrderResponse> findAllCustomerId(Long customerId, PageRequest pageRequest) {
+        var orders =  orderRepository.findAllByCustomerId(customerId, pageRequest);
+        return orders.map(OrderResponse::fromEntity);
     }
 
     private static BigDecimal getTotalItems(OrderCreatedEventDto eventDto) {
